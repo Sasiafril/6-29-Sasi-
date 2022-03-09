@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Contact;
+ use App\Models\Contact;
+
 class ContactController extends Controller
 {
     /**
@@ -14,7 +15,7 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::paginate(2);
-       return view('admin/contacts/index', compact('contacts'));
+        return view('admin/contacts/index', compact('contacts'));
     }
 
     /**
@@ -37,12 +38,12 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        //dd($request->all());
+
         $contact = Contact::create($request->all());
         $contact->save();
-
-        return redirect()->route('contacts.create');
-
+        return redirect('contacts');
+        
     }
 
     /**
@@ -64,7 +65,7 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        $contact = Contact::findOrfail($id);
+        $contact = Contact::findOrFail($id);
         return view('admin/contacts/edit', compact('contact'));
     }
 
@@ -77,7 +78,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $contact = Contact::findOrfail($id);
+        $contact = Contact::findOrFail($id);
         $contact->update($request->all());
         $contact->save();
 
@@ -92,7 +93,7 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        $contact = Contact::findOrfail($id);
+        $contact = Contact::findOrFail($id);
         $contact->delete();
 
         return redirect()->route('contacts.index');

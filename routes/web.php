@@ -29,24 +29,30 @@ Route::get('/about', function () {
     ]);
 });
 
-Route::get('/gallery', function () {
-    return view('gallery', [
-        "title" => "Gallery"
+Route::get('/gallery',function(){
+    return view('gallery',[
+    "title" => "Gallery",
     ]);
 });
 
-Route::resource('/contacts', ContactController::class);
+Route::get('/contacts', function (){
+    return view('contacts', [
+        "title" => "Contacts"
+    ]);
+});
 
+//Route::resource('/contacts', ContactController::class);
+Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
+Route::post('/contacts/store', [ContactController::class, 'store'])->name('contacts.store');
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function (){
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/contact/index', [ContactController::class, 'index'])->name('Contacts.index');
-    Route::get('/contact/{id}/edit', [ContactController::class, 'edit'])->name('Contacts.edit');
-    Route::post('/contact/{id}/update', [ContactController::class, 'update'])->name('Contacts.update');
-    Route::get('/contact/{id}/destroy', [ContactController::class, 'destroy'])->name('Contacts.destroy');
+Route::group(['middleware' => ['auth']], function(){
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/contacts/index', [ContactController::class, 'index'])->name('contacts.index');
+Route::get('/contacts/{id}/edit', [ContactController::class, 'edit'])->name('contacts.edit');
+Route::post('/contacts/{id}/update', [ContactController::class, 'update'])->name('contacts.update');
+Route::get('/contacts/{id}/destroy', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
 
 });
-
